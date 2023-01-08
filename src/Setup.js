@@ -30,6 +30,10 @@ export default function Setup({ ...props }) {
     if (actions.Spin3 && actions.Spin3.isRunning()) {
       // Play the animation
       actions.Spin3.play();
+      actions.Spin4.play(); 
+      actions.Spin5.play(); 
+      actions.Spin6.play();
+      actions.Spin7.play();
       console.log(actions.Spin3.isRunning())
     }
   }
