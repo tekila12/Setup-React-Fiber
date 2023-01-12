@@ -2,12 +2,13 @@ import logo from './logo.svg';
 import './App.css';
 import { Canvas, extend } from '@react-three/fiber'
 import { Effects, Environment,Lightformer, OrbitControls, useGLTF } from '@react-three/drei'
-import Setup from './Setup'
+import {Setup} from './Setup'
+import { Suspense } from 'react';
 function App() {
   const { nodes, materials, animations } = useGLTF('/wholeSetup1.glb')
   return (
     <div style={{ width: "100vw", height: "100vh" }}>   
-    
+    <Suspense fallback={null}>
     <Canvas camera={{ position: [-30, 40, 80], fov: 55, near: 1, far: 20000 }}>
     <Environment resolution={512}>       
         <Lightformer intensity={2} rotation-x={Math.PI / 2} position={[0, 4, -9]} scale={[10, 1, 1]} />
@@ -29,7 +30,7 @@ function App() {
    
    <OrbitControls />
       </Canvas> 
-      
+      </Suspense>
      
     </div>
   );
