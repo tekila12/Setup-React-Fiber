@@ -32,7 +32,7 @@ export function Setup(props) {
               Math.abs(materials['Material.021'].color.b - endColor.b) < 0.01) {
               clearInterval(transitionInterval);
           }
-      }, 1000 / 60);
+      }, 1000 / 50);
   }, 2000)
 
     actions.Spin3.play()
