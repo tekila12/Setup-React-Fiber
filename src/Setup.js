@@ -81,12 +81,20 @@ const handlekeyboard  = () => [
     let rStep = (endColor.r - materials['Material.074_36'].color.r) / 60;
     let gStep = (endColor.g - materials['Material.074_36'].color.g) / 60;
     let bStep = (endColor.b - materials['Material.074_36'].color.b) / 60;
+    let rStepLeft = (endColor.r - materials['Material.074_33'].color.r) / 60;
+    let gStepRight = (endColor.r - materials['Material.074_33'].color.g) / 60;
+    let bStepBottom = (endColor.r - materials['Material.074_33'].color.b) / 60;
+
 
     let transitionInterval = setInterval(() => {
         materials['Material.074_36'].color.r += rStep;
         materials['Material.074_36'].color.g += gStep;
         materials['Material.074_36'].color.b += bStep;
         materials['Material.074_36'].needsUpdate = true;
+        materials['Material.074_33'].color.r += rStepLeft;
+        materials['Material.074_33'].color.g += gStepRight;
+        materials['Material.074_33'].color.b += bStepBottom;
+        materials['Material.074_33'].needsUpdate = true;
         if (Math.abs(materials['Material.074_36'].color.r - endColor.r) < 0.01 &&
             Math.abs(materials['Material.074_36'].color.g - endColor.g) < 0.01 &&
             Math.abs(materials['Material.074_36'].color.b - endColor.b) < 0.01) {
