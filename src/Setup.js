@@ -15,30 +15,11 @@ export function Setup(props) {
   let intervalId;
 
   function handleClick() {
-    intervalId = setInterval(() => {
-      const startColor = new THREE.Color(Math.random() * 0xffffff);
-      const endColor = new THREE.Color(Math.random() * 0xffffff);
-      let rStep = (endColor.r - materials['Material.021'].color.r) / 60;
-      let gStep = (endColor.g - materials['Material.021'].color.g) / 60;
-      let bStep = (endColor.b - materials['Material.021'].color.b) / 60;
-
-      let transitionInterval = setInterval(() => {
-          materials['Material.021'].color.r += rStep;
-          materials['Material.021'].color.g += gStep;
-          materials['Material.021'].color.b += bStep;
-          materials['Material.021'].needsUpdate = true;
-          if (Math.abs(materials['Material.021'].color.r - endColor.r) < 0.01 &&
-              Math.abs(materials['Material.021'].color.g - endColor.g) < 0.01 &&
-              Math.abs(materials['Material.021'].color.b - endColor.b) < 0.01) {
-              clearInterval(transitionInterval);
-          }
-          const material = materials["Material.001"]
-          const color = new Color()
-          color.setHex(0xff0000)
-          material.color = color
-      }, 1000 / 50);
-  }, 2000)
-    handleMouse()
+          const material001 = materials["Material.001"] 
+          const color001 = new THREE.Color(0xff0000)
+          material001.color = color001
+          material001.needsUpdate = true;        
+     
     handlekeyboard()
     actions.Spin3.play()
     actions.Spin2.play()
@@ -51,58 +32,53 @@ export function Setup(props) {
 
 }
 
-const handleMouse = () => [
+
+
+
+
+function transitionColor(material) {
+  const startColor = new THREE.Color(Math.random() * 0xffffff);
+  const endColor = new THREE.Color(Math.random() * 0xffffff);
+  let rStep = (endColor.r - material.color.r) / 60;
+  let gStep = (endColor.g - material.color.g) / 60;
+  let bStep = (endColor.b - material.color.b) / 60;
+
+  let transitionInterval = setInterval(() => {
+      material.color.r += rStep;
+      material.color.g += gStep;
+      material.color.b += bStep;
+      material.needsUpdate = true;
+
+      if (Math.abs(material.color.r - endColor.r) < 0.01 &&
+          Math.abs(material.color.g - endColor.g) < 0.01 &&
+          Math.abs(material.color.b - endColor.b) < 0.01 ) {
+          clearInterval(transitionInterval);
+      }
+  }, 1000 / 50);
+}
+
+
+
+const handlekeyboard  = () => {
   intervalId = setInterval(() => {
-    const startColor = new THREE.Color(Math.random() * 0xffffff);
-    const endColor = new THREE.Color(Math.random() * 0xffffff);
-    let rStep = (endColor.r - materials['Material.074_25'].color.r) / 60;
-    let gStep = (endColor.g - materials['Material.074_25'].color.g) / 60;
-    let bStep = (endColor.b - materials['Material.074_25'].color.b) / 60;
+    const material026 = materials["Material.019"] 
+    const color026 = new THREE.Color(0x00ff00)
+    material026.color = color026
+    material026.needsUpdate = true;
+    transitionColor(materials['Material.074_36']);
+    transitionColor(materials['Material.074_37']);
+    transitionColor(materials['Material.074_39']);
+    transitionColor(materials['Material.074_38']);
+    transitionColor(materials['Tasten_2']);
+    transitionColor(materials['Material.074_33']);
+    transitionColor(materials['Material.074_32']);
+    transitionColor(materials['Material.074_34']);
+    transitionColor(materials['Material.074_35']);
+    transitionColor(materials['Material.074_25']);
+    transitionColor(materials['Material.021']);
+  }, 3000);
+}
 
-    let transitionInterval = setInterval(() => {
-        materials['Material.074_25'].color.r += rStep;
-        materials['Material.074_25'].color.g += gStep;
-        materials['Material.074_25'].color.b += bStep;
-        materials['Material.074_25'].needsUpdate = true;
-        if (Math.abs(materials['Material.074_25'].color.r - endColor.r) < 0.01 &&
-            Math.abs(materials['Material.074_25'].color.g - endColor.g) < 0.01 &&
-            Math.abs(materials['Material.074_25'].color.b - endColor.b) < 0.01) {
-            clearInterval(transitionInterval);
-        }
-    }, 1000 / 50);
-}, 4000)
-]
-
-
-const handlekeyboard  = () => [
-  intervalId = setInterval(() => {
-    const startColor = new THREE.Color(Math.random() * 0xffffff);
-    const endColor = new THREE.Color(Math.random() * 0xffffff);
-    let rStep = (endColor.r - materials['Material.074_36'].color.r) / 60;
-    let gStep = (endColor.g - materials['Material.074_36'].color.g) / 60;
-    let bStep = (endColor.b - materials['Material.074_36'].color.b) / 60;
-    let rStepLeft = (endColor.r - materials['Material.074_33'].color.r) / 60;
-    let gStepRight = (endColor.r - materials['Material.074_33'].color.g) / 60;
-    let bStepBottom = (endColor.r - materials['Material.074_33'].color.b) / 60;
-
-
-    let transitionInterval = setInterval(() => {
-        materials['Material.074_36'].color.r += rStep;
-        materials['Material.074_36'].color.g += gStep;
-        materials['Material.074_36'].color.b += bStep;
-        materials['Material.074_36'].needsUpdate = true;
-        materials['Material.074_33'].color.r += rStepLeft;
-        materials['Material.074_33'].color.g += gStepRight;
-        materials['Material.074_33'].color.b += bStepBottom;
-        materials['Material.074_33'].needsUpdate = true;
-        if (Math.abs(materials['Material.074_36'].color.r - endColor.r) < 0.01 &&
-            Math.abs(materials['Material.074_36'].color.g - endColor.g) < 0.01 &&
-            Math.abs(materials['Material.074_36'].color.b - endColor.b) < 0.01) {
-            clearInterval(transitionInterval);
-        }
-    }, 1000 / 50);
-}, 4000)
-]
 
   return (
     <group ref={group} {...props} dispose={null}>
