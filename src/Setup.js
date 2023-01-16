@@ -4,38 +4,26 @@ Command: npx gltfjsx@6.1.3 veryNewSetup1234.glb
 */
 
 import React, { useRef, useEffect, useState, useLayoutEffect  } from 'react'
-import { useGLTF, useAnimations } from '@react-three/drei'
-import {  useFrame } from "@react-three/fiber";
+import { useGLTF, useAnimations, Center,Text3D } from '@react-three/drei'
+import {  useFrame, useThree } from "@react-three/fiber";
 import * as THREE from 'three'
+
 export function Setup(props) {
   const group = useRef()
   const meshRef = useRef();
+  const images = [   '/images/windows-loader.jpg', '/images/newAjnur1.jpg','/images/aourus.jpg', ]
   const { nodes, materials, animations } = useGLTF('/veryNewSetup1234.glb')
   const { actions } = useAnimations(animations, group)
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [zoom, setZoom] = useState(false);
   const [isZooming, setIsZooming] = useState(false);
-  const [focus, setFocus] = useState(null);
-  const images = ['/images/aourus.jpg', '/images/newAjnur1.jpg', '/images/windows-loader.jpg']
+  const [scale, setScale] = useState(1)
+  const [focus, setFocus] = useState(true);
+  const [textContent, setTextContent] = useState("Hello, Click on the Power-up ")
+  const blackMaterial = new THREE.MeshStandardMaterial({ color: 0x000000 });
+  const { width, height } = useThree((state) => state.viewport)
   const vec = new THREE.Vector3();
   
-
-  
-  useFrame((state) => {
-    if (meshRef.current && isZooming && focus) {
-      const step = 0.015;
-      zoom ? vec.set(focus.x, focus.y, focus.z + 0.1) : vec.set(1, 0, 0);
-      state.camera.position.lerp(vec, step);
-      state.camera.lookAt(meshRef.current.position);
-      state.camera.updateProjectionMatrix();
-    }
-  });
-
-  let intervalId;
-  let intervalIdTwo;
-
-
-
   const Push= ()=> {
     if (meshRef.current) {
       setZoom(true);
@@ -44,6 +32,35 @@ export function Setup(props) {
     }
 
   }
+
+  useEffect(() => {
+    meshRef.current.position.x = meshRef.current.position.x;
+    meshRef.current.position.y = meshRef.current.position.y;
+    meshRef.current.position.z = meshRef.current.position.z;
+}, []);
+  
+
+
+
+useEffect(() => {
+    if (window.innerWidth < 1400) {
+        setScale(window.innerWidth * 0.01)
+    } else {
+        setScale(1)
+    }
+}, [window.innerWidth])
+
+
+
+useFrame((state) => {
+    if (meshRef.current && isZooming && focus) {
+        const step = 0.015;
+        vec.set(meshRef.current.position.x, meshRef.current.position.y, meshRef.current.position.z + 0.1);
+        state.camera.position.lerp(vec, step);
+        state.camera.lookAt(meshRef.current.position);
+        state.camera.updateProjectionMatrix();
+    }
+});
 
   useEffect(() => {
     if (isZooming) {
@@ -55,13 +72,35 @@ export function Setup(props) {
     }
   }, [isZooming]);
 
+  let intervalId;
+  
+
+ let intervalIdTwo;
+
+ 
+
+
+
   function handleClick() {
+    clearTimeout(intervalId);
+    setCurrentImageIndex(0);
+    intervalId = setTimeout(() => {
+        intervalId = setInterval(() => {
+            setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+            if (currentImageIndex === 0) {
+                clearInterval(intervalId);
+            }
+        }, 3000);
+    }, 3000);
+
+    
           const material001 = materials["Material.001"] 
           const color001 = new THREE.Color(0xff0000)
           material001.color = color001
           material001.needsUpdate = true;        
      
     handlekeyboard()
+
     actions.Spin3.play()
     actions.Spin2.play()
     actions.Spin1.play()
@@ -71,12 +110,11 @@ export function Setup(props) {
     actions.Spin7.play()
     actions.Spin.play()
  
-    const intervalIdTwo = setTimeout(() => {
-      setCurrentImageIndex((currentImageIndex + 1) % images.length);
-  }, 3000);
-  return () => clearTimeout(intervalIdTwo);
+   
 
 }
+
+
 
 
 
@@ -107,10 +145,6 @@ function transitionColor(material) {
 
 const handlekeyboard  = () => {
   intervalId = setInterval(() => {
-    // const material074_30 = materials["Material.074_30.001"];
-    // material074_30.map = new THREE.TextureLoader().load(images[currentImageIndex]);
-    // material074_30.needsUpdate = true;
-    // currentImageIndex = (currentImageIndex + 1) % images.length;
     const material026 = materials["Material.019"] 
     const color026 = new THREE.Color(0x00ff00)
     material026.color = color026
@@ -133,7 +167,7 @@ const handlekeyboard  = () => {
 
 
   return (
-    <group ref={group} {...props} dispose={null}>
+    <group ref={group}  {...props} dispose={null}>
       <group name="Scene">
         <group name="Sketchfab_model" position={[5.75, 5.41, 0.03]} rotation={[-2.79, -1.57, 0]} scale={0.72}>
           <group name="root">
@@ -232,7 +266,7 @@ const handlekeyboard  = () => {
                 <mesh name="Cube016_Material017_0" geometry={nodes.Cube016_Material017_0.geometry} material={materials['Material.017']} />
               </group>
               <group name="Cube017" position={[-251.38, 292.35, -334.9]} rotation={[-Math.PI / 2, Math.PI / 2, 0]} scale={[50.67, 50.67, 10]}>
-                <mesh name="Cube017_Material017_0" geometry={nodes.Cube017_Material017_0.geometry} material={materials['Material.017']} position={[0.09, 0.57, 0.02]} />
+                <mesh name="Cube017_Material017_0" geometry={nodes.Cube017_Material017_0.geometry} material={materials['Material.017']} position={[0.09, 0.07, 0.02]} />
               </group>
               <group name="Cube018" position={[79.29, 288.43, -355.56]} rotation={[-Math.PI / 2, Math.PI / 2, 0]} scale={[50.67, 50.67, 10]}>
                 <mesh name="Cube018_Material017_0" geometry={nodes.Cube018_Material017_0.geometry} material={materials['Material.017']} />
@@ -2440,7 +2474,7 @@ const handlekeyboard  = () => {
             <mesh name="Cylinder028" geometry={nodes.Cylinder028.geometry} material={materials['Material.020']} />
             <mesh name="Cylinder028_1" geometry={nodes.Cylinder028_1.geometry} material={materials['Material.021']} />
           </group>
-          <group name="insideFan" position={[-2.42, 3.58, 2.88]} rotation={[0, 0, -1.58]} scale={0.09}>
+          <group name="insideFan" position={[-2.42, 3.38, 2.88]} rotation={[0, 0, -1.58]} scale={0.09}>
             <mesh name="Cylinder026" geometry={nodes.Cylinder026.geometry} material={materials['Material.020']} />
             <mesh name="Cylinder026_1" geometry={nodes.Cylinder026_1.geometry} material={materials['Material.021']} />
           </group>
@@ -2472,15 +2506,15 @@ const handlekeyboard  = () => {
             <mesh name="Plane003" geometry={nodes.Plane003.geometry} material={materials['Material.021']} position={[0.6, -1.41, 12]} rotation={[0, 0.3, 3.14]} scale={[1, 1, 0.97]} />
             <mesh name="Plane004" geometry={nodes.Plane004.geometry} material={materials['Material.021']} position={[0, 3.08, -0.35]} rotation={[0, 0.3, 3.14]} scale={[0.96, 1, 0.98]} />
             <mesh name="Plane005" geometry={nodes.Plane005.geometry} material={materials['Material.021']} position={[0, 3.08, 11.79]} rotation={[0, 0.3, 3.14]} scale={[1, 1, 0.97]} />
-            <mesh name="Plane006" geometry={nodes.Plane006.geometry} material={materials['Material.021']} position={[0, -33.63, 11.79]} rotation={[0, 0.3, 3.14]} scale={[1, 1, 0.97]} />
+            <mesh name="Plane006" geometry={nodes.Plane006.geometry} material={materials['Material.021']} position={[2.1, -33.63, 11.79]} rotation={[0, 0.3, 3.14]} scale={[1, 1, 0.97]} />
             <mesh name="Plane007" geometry={nodes.Plane007.geometry} material={materials['Material.021']} position={[2.57, -37.16, 12.31]} rotation={[0, 0.3, 3.14]} scale={[1, 1, 0.97]} />
             <mesh name="Plane008" geometry={nodes.Plane008.geometry} material={materials['Material.021']} position={[0.6, -1.41, -0.5]} rotation={[0, 0.3, 3.14]} scale={[1, 1, 0.97]} />
-            <mesh name="Plane009" geometry={nodes.Plane009.geometry} material={materials['Material.021']} position={[-0.52, -23.02, 9.57]} rotation={[0, 0.3, 3.14]} scale={[0.77, 0.77, 0.74]} />
+            <mesh name="Plane009" geometry={nodes.Plane009.geometry} material={materials['Material.021']} position={[-0.92, -23.02, 9.57]} rotation={[0, 0.3, 3.14]} scale={[0.77, 0.77, 0.74]} />
             <mesh name="Plane010" geometry={nodes.Plane010.geometry} material={materials['Material.021']} position={[-1.79, -29.59, 9.34]} rotation={[0, 0.3, 3.14]} scale={[0.77, 0.77, 0.74]} />
             <mesh name="Cube003_1" geometry={nodes.Cube003_1.geometry} material={materials['Material.020']} position={[0, 0, -0.35]} scale={[1, 1, 0.95]} />
             <mesh name="Cube004_1" geometry={nodes.Cube004_1.geometry} material={materials['Material.020']} position={[0, 0, 11.79]} scale={[1, 1, 0.96]} />
             <mesh name="Cube005_1" geometry={nodes.Cube005_1.geometry} material={materials['Material.020']} position={[0, 0, 11.79]} scale={[1, 1, 0.96]} />
-            <mesh name="Cube006_1" geometry={nodes.Cube006_1.geometry} material={materials['Material.020']} position={[2.99, -36.71, 12.33]} scale={[1, 1, 0.96]} />
+            <mesh name="Cube006_1" geometry={nodes.Cube006_1.geometry} material={materials['Material.020']} position={[2.19, -36.71, 11.62]} scale={[1, 1, 0.96]} />
             <mesh name="Cube007_1" geometry={nodes.Cube007_1.geometry} material={materials['Material.020']} position={[0, 0, 11.79]} scale={[1, 1, 0.96]} />
             <mesh name="Cube008_1" geometry={nodes.Cube008_1.geometry} material={materials['Material.020']} position={[0, 0, 11.79]} scale={[1, 1, 0.96]} />
             <mesh name="Cube009_1" geometry={nodes.Cube009_1.geometry} material={materials['Material.020']} position={[2.57, -37.4, 12.31]} rotation={[0, 0, Math.PI]} scale={[1, 1, 0.96]} />
@@ -2517,7 +2551,7 @@ const handlekeyboard  = () => {
             </group>
           </group>
         </group>
-        <group name="Sketchfab_model001" position={[-2.92, 5.86, 9]} rotation={[-Math.PI / 2, 0, -0.69]} scale={7.21}>
+        <group name="Sketchfab_model001" position={[-2.92, 5.86, 9]} rotation={[-Math.PI / 2, 0, -0.69]} scale={4.21}>
           <group name="Collada_visual_scene_group" rotation={[Math.PI / 2, 0, 0]}>
             <group name="Armrest">
               <mesh name="defaultMaterial010" geometry={nodes.defaultMaterial010.geometry} material={materials['01___Default']} />
@@ -2602,7 +2636,17 @@ const handlekeyboard  = () => {
         <mesh name="Object_128" geometry={nodes.Object_128.geometry} material={materials['Material.016']} position={[3.59, 6.74, 1.04]} rotation={[Math.PI / 2, 0, 0]} scale={[0.58, 1.12, 0.9]} />
         <mesh name="Object_128001" geometry={nodes.Object_128001.geometry} material={materials['Material.016']} position={[2.63, 6.45, -1.01]} rotation={[Math.PI / 2, 0, -1.57]} scale={[1.9, 1.12, 1.46]} />
         <mesh name="Cube053_Material048_0001" geometry={nodes.Cube053_Material048_0001.geometry} material={materials['Material.059']} />
-        <mesh name="MY_SCREEN_MY_SCREEN_0" ref={meshRef}   onClick={Push} geometry={nodes.MY_SCREEN_MY_SCREEN_0.geometry} material={new THREE.MeshStandardMaterial({ map: new THREE.TextureLoader().load(images[currentImageIndex]) })} position={[-3.05, 7.2, -1.25]} rotation={[Math.PI /-33.8, 0, 0]} scale={3.27} />
+        <mesh name="MY_SCREEN_MY_SCREEN_0" ref={meshRef}   onClick={Push} geometry={nodes.MY_SCREEN_MY_SCREEN_0.geometry} material={currentImageIndex === 0 ? blackMaterial : new THREE.MeshStandardMaterial({ map: new THREE.TextureLoader().load(images[currentImageIndex]) })} position={[-3.05, 7.2, -1.25]} rotation={[Math.PI /-33.8, 0, 0]} scale={3.27} />
+        <Center position={[0,11,1]}>
+        <Text3D  curveSegments={12}
+         
+          
+          letterSpacing={-0.01}
+          size={0.5}
+          font="/Inter_Bold.json">       
+        {textContent}
+      </Text3D>
+      </Center>
         <mesh name="TwistedTorus" geometry={nodes.TwistedTorus.geometry} material={materials['Material.001']} position={[2.83, 7.31, 0.86]} rotation={[Math.PI / 2, 0, 0]} scale={0.06} />
         <mesh name="Text001" geometry={nodes.Text001.geometry} material={materials['Material.009']} position={[2.71, 7.47, 0.88]} rotation={[Math.PI / 2, 0, 0]} scale={0.08} />
       </group>
