@@ -17,10 +17,7 @@ export function Setup(props) {
   const [scale, setScale] = useState(1)
   const [focus, setFocus] = useState(true);
   const [textContent, setTextContent] = useState("Hello, Click on the Power ")
-  
-
   const blackMaterial = new THREE.MeshStandardMaterial({ color: 0x000000 });
-
   const vec = new THREE.Vector3();
   
  
@@ -33,11 +30,6 @@ export function Setup(props) {
     }
 
   }
-
-
-  
-
-
 
 
 useFrame((state) => {
@@ -2618,9 +2610,7 @@ const handlekeyboard  = () => {
         <mesh name="Cube053_Material048_0001" geometry={nodes.Cube053_Material048_0001.geometry} material={materials['Material.059']} />
         <mesh name="MY_SCREEN_MY_SCREEN_0" ref={meshRef}   onClick={Push} geometry={nodes.MY_SCREEN_MY_SCREEN_0.geometry} material={currentImageIndex === 0 ? blackMaterial : new THREE.MeshStandardMaterial({ map: new THREE.TextureLoader().load(images[currentImageIndex]) })} position={[-3.05, 7.2, -1.25]} rotation={[Math.PI /-33.8, 0, 0]} scale={3.27} />
         <Center position={[0,11,1]}>
-        <Text3D  curveSegments={12}
-         
-          
+        <Text3D  curveSegments={12}        
           letterSpacing={-0.01}
           size={0.5}
           font="/Inter_Bold.json">       
