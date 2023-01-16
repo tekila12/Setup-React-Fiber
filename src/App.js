@@ -1,10 +1,9 @@
-import logo from './logo.svg';
-import './App.css';
-import { Canvas, extend } from '@react-three/fiber'
-import { Effects, Environment,Lightformer, OrbitControls, useGLTF } from '@react-three/drei'
+
+import { Canvas,  } from '@react-three/fiber'
+import {  OrbitControls,  } from '@react-three/drei'
 import {Setup} from './Setup'
 import { Suspense } from 'react';
-import { DirectionalLight } from 'three';
+
 function App() {
 
   return (
