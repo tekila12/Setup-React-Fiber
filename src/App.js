@@ -8,9 +8,11 @@ function App() {
 
   return (
     <div style={{ width: "100vw", height: "100vh", background:'black' }}>   
+    
+    <Canvas camera={{ position: [0, 25, 70], fov: 55, near: 1, far: 20000 }} dpr={[1,2]} > 
     <Suspense fallback={null}>
-    <Canvas camera={{ position: [0, 25, 70], fov: 55, near: 1, far: 20000 }} dpr={[1,2]} >    
     <Setup receiveShadow castShadow scale ={2.21} position={[-1.3,-1.3,39.1]} rotation={[0,0,0]} />
+    </Suspense>   
    <ambientLight color={'white'}/>
    <directionalLight color={'white'}/>
    <OrbitControls />
@@ -22,7 +24,7 @@ function App() {
       groundColor={0x888466}
       intensity={1.5}/>
       </Canvas> 
-      </Suspense>
+      
      
     </div>
   );
