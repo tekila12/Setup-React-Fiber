@@ -21,9 +21,9 @@ function App() {
     }
   }, [counter, stopCounter]);
 
-  const Loading = () => <Text>Loading3D Model. Please wait {counter}
+  const Loading = () => <Text>Loading 3D Model. Please wait 
     </Text>
-    ;
+   
 
 
 
