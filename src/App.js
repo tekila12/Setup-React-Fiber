@@ -7,12 +7,10 @@ import { Suspense } from 'react';
 function App() {
 
  
-  
 
-  const [loading, setLoading] = useState(true);
-  const [counter, setCounter] = useState(0);
+  const [counter, setCounter] = useState(10);
   const [stopCounter, setStopCounter] = useState(false);
-  
+
   useEffect(() => {
     if (!stopCounter && counter < 100) {
       setTimeout(() => {
@@ -23,21 +21,8 @@ function App() {
     }
   }, [counter, stopCounter]);
 
-  useEffect(() => {
-    setLoading(false);
-  }, [])
-
-  const Loading = () => <Text>Loading... {counter}</Text>;
-
-  if (loading) {
-    return (
-      <div style={{ width: '100vw', height: '100vh', background: 'black' }}>
-        <Canvas camera={{ position: [0, 25, 70], fov: 55, near: 1, far: 20000 }} dpr={[1, 2]}>
-          <Loading />
-        </Canvas>
-      </div>
-    );
-  }
+  const Loading = () => <Text>Loading 3D Model. Please wait 
+    </Text>
    
 
 
