@@ -22,7 +22,7 @@ export function Setup(props) {
   
  
 
-  const Push= ()=> {
+  const zoomIn = ()=> {
     if (meshRef.current) {
       setZoom(true);
       setFocus(meshRef.current.position);
@@ -42,6 +42,8 @@ useFrame((state) => {
     }
 });
 
+
+
   useEffect(() => {
     if (isZooming) {
       const timeoutId = setTimeout(() => {
@@ -55,6 +57,7 @@ useFrame((state) => {
   let intervalId;
   
  
+
  useEffect(() => {
   const mesh = nodes.MY_SCREEN_MY_SCREEN_0;
   mesh.material = currentImageIndex === 0 ? blackMaterial : new THREE.MeshStandardMaterial({ map: new THREE.TextureLoader().load(images[currentImageIndex]) });
@@ -62,14 +65,15 @@ useFrame((state) => {
 
 
 
-  function handleClick() {
+
+  const handleClick =()=> {
     clearTimeout(intervalId);
     setCurrentImageIndex(0);
     intervalId = setTimeout(() => {
       intervalId = setInterval(() => {
         setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
         if (currentImageIndex === 0) {
-          setTextContent("Now kindly click on the monitor to zoom in");
+          setTextContent("Now click on the monitor to zoom in");
           clearInterval(intervalId);
         }
       }, 3000);
@@ -79,6 +83,11 @@ useFrame((state) => {
     material001.color = color001
     material001.needsUpdate = true;
     handlekeyboard()
+    Animations()
+}
+
+
+const Animations= ()=>{
     actions.Spin3.play()
     actions.Spin2.play()
     actions.Spin1.play()
@@ -92,10 +101,7 @@ useFrame((state) => {
 
 
 
-
-
-
-function transitionColor(material) {
+const transitionColor = (material) => {
   const endColor = new THREE.Color(Math.random() * 0xffffff);
   let rStep = (endColor.r - material.color.r) / 60;
   let gStep = (endColor.g - material.color.g) / 60;
@@ -2608,7 +2614,7 @@ const handlekeyboard  = () => {
         <mesh name="Object_128" geometry={nodes.Object_128.geometry} material={materials['Material.016']} position={[3.59, 6.74, 1.04]} rotation={[Math.PI / 2, 0, 0]} scale={[0.58, 1.12, 0.9]} />
         <mesh name="Object_128001" geometry={nodes.Object_128001.geometry} material={materials['Material.016']} position={[2.63, 6.45, -1.01]} rotation={[Math.PI / 2, 0, -1.57]} scale={[1.9, 1.12, 1.46]} />
         <mesh name="Cube053_Material048_0001" geometry={nodes.Cube053_Material048_0001.geometry} material={materials['Material.059']} />
-        <mesh name="MY_SCREEN_MY_SCREEN_0" ref={meshRef}   onClick={Push} geometry={nodes.MY_SCREEN_MY_SCREEN_0.geometry} material={currentImageIndex === 0 ? blackMaterial : new THREE.MeshStandardMaterial({ map: new THREE.TextureLoader().load(images[currentImageIndex]) })} position={[-3.05, 7.2, -1.25]} rotation={[Math.PI /-33.8, 0, 0]} scale={3.27} />
+        <mesh name="MY_SCREEN_MY_SCREEN_0" ref={meshRef}   onClick={zoomIn} geometry={nodes.MY_SCREEN_MY_SCREEN_0.geometry} material={currentImageIndex === 0 ? blackMaterial : new THREE.MeshStandardMaterial({ map: new THREE.TextureLoader().load(images[currentImageIndex]) })} position={[-3.05, 7.2, -1.25]} rotation={[Math.PI /-33.8, 0, 0]} scale={3.27} />
         <Center position={[0,11,1]}>
         <Text3D  curveSegments={12}        
           letterSpacing={-0.01}
