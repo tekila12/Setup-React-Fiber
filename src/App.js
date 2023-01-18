@@ -1,7 +1,7 @@
 import React,{useEffect, useState} from 'react'
 import { Canvas,  } from '@react-three/fiber'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import {  OrbitControls, Text, Environment, Merged, MeshReflectorMaterial, useProgress, Loader  } from '@react-three/drei'
+import {  OrbitControls, Text, Environment, Merged, MeshReflectorMaterial, useProgress, Loader, Center  } from '@react-three/drei'
 import {Setup} from './Setup'
 import { Suspense } from 'react';
 
@@ -15,7 +15,11 @@ function App() {
 
   const  Loader=()=> {
     const { active, progress, errors, item, loaded, total } = useProgress()
-    return <Text center>Loading 3D Model. Please wait {progress.toFixed(2)} % {loaded}ms </Text>
+         
+    return  <Center width={50}>
+            <Text  width={50} center>Loading 3D Model.  It can take some time {progress.toFixed(2)} %  {total} ms</Text>
+
+          </Center>
   }
 
 
