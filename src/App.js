@@ -14,15 +14,20 @@ function App() {
   useEffect(() => {
     const loader = new GLTFLoader();
     loader.load('/veryNewSetup1234.glb', (gltf) => {
-      setLoadingProgress(1);
       setModel(gltf);
     }, (xhr) => {
-      setLoadingProgress(xhr.loaded / xhr.total);
+      if (xhr.lengthComputable) {
+        updateProgressBar(xhr.loaded / xhr.total * 100);
+        console.log( Math.round( xhr.loaded / xhr.total * 100, 2 ) + '% downloaded' );
+      }
     });
   }, []);
 
+  function updateProgressBar(fraction) {
+    setLoadingProgress(fraction);
+  }
 
-  const Loading = () => <Text>Loading... {Math.round(loadingProgress * 100)}%</Text>;
+  const Loading = () => <Text>Loading... {(loadingProgress * 100).toFixed(2)}%</Text>;
 
 
 
