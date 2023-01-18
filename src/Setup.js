@@ -1,13 +1,14 @@
 
 
 import React, { useRef, useEffect, useState, useMemo,   } from 'react'
-import { useGLTF, useAnimations, Center,Text3D } from '@react-three/drei'
+import { useGLTF, useAnimations, Center,Text3D, PositionalAudio } from '@react-three/drei'
 import {  useFrame, useThree } from "@react-three/fiber";
 import * as THREE from 'three'
 
 export function Setup(props) {
   const group = useRef()
   const meshRef = useRef();
+  const sound = useRef();
   const images = [   '/images/windows-loader.jpg', '/images/newAjnur1.jpg','/images/aourus.jpg', ]
   const { nodes, materials, animations } = useGLTF('/veryNewSetup1234.glb')
   const { actions } = useAnimations(animations, group)
@@ -67,6 +68,12 @@ useFrame((state) => {
 
 
   const handleClick =()=> {
+
+    setTimeout(()=>{
+      sound.current.setLoop(false);
+      sound.current.play();
+    },3000)
+
     clearTimeout(intervalId);
     setCurrentImageIndex(0);
     intervalId = setTimeout(() => {
@@ -155,6 +162,7 @@ const handlekeyboard  = () => {
             </group>
           </group>
         </group>
+        <PositionalAudio ref={sound}  url="/vista.ogv" distance={3} />
         <group name="Sketchfab_model002" position={[0, 4.23, 0]} rotation={[-Math.PI / 2, 0, -1.56]}>
           <group name="dd12f1d0399348aab05d4e554860e7c0fbx" rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
             <group name="RootNode001">
