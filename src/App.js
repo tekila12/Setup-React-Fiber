@@ -1,5 +1,6 @@
 import React,{useEffect, useState} from 'react'
 import { Canvas,  } from '@react-three/fiber'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import {  OrbitControls, Text,  } from '@react-three/drei'
 import {Setup} from './Setup'
 import { Suspense } from 'react';
@@ -7,23 +8,21 @@ import { Suspense } from 'react';
 function App() {
 
  
-
-  const [counter, setCounter] = useState(10);
-  const [stopCounter, setStopCounter] = useState(false);
+  const [loadingProgress, setLoadingProgress] = useState(0);
+  const [model, setModel] = useState(null);
 
   useEffect(() => {
-    if (!stopCounter && counter < 100) {
-      setTimeout(() => {
-        setCounter(counter + 1);
-      }, 10);
-    } else {
-      setStopCounter(true);
-    }
-  }, [counter, stopCounter]);
+    const loader = new GLTFLoader();
+    loader.load('/veryNewSetup1234.glb', (gltf) => {
+      setLoadingProgress(1);
+      setModel(gltf);
+    }, (xhr) => {
+      setLoadingProgress(xhr.loaded / xhr.total);
+    });
+  }, []);
 
-  const Loading = () => <Text>Loading 3D Model. Please wait 
-    </Text>
-   
+
+  const Loading = () => <Text>Loading... {Math.round(loadingProgress * 100)}%</Text>;
 
 
 
@@ -32,10 +31,13 @@ function App() {
     <div style={{ width: "100vw", height: "100vh", background:'black' }}>   
     
     <Canvas camera={{ position: [0, 25, 70], fov: 55, near: 1, far: 20000 }} dpr={[1,2]} > 
-    <Suspense fallback={<Loading/>}>
   
-    <Setup receiveShadow castShadow scale ={2.21} position={[-1.3,-1.3,39.1]} rotation={[0,0,0]} />
-    </Suspense>   
+    <Suspense fallback={<Loading />}>
+       {model && <Setup receiveShadow castShadow model={model} scale ={2.21} position={[-1.3,-1.3,39.1]}  rotation={[0,0,0]} />}       
+      </Suspense>
+    
+ 
+ 
    <ambientLight color={'white'}/>
    <directionalLight color={'white'}/>
    <OrbitControls />
