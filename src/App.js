@@ -1,7 +1,7 @@
 import React,{useEffect, useState} from 'react'
 import { Canvas,  } from '@react-three/fiber'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import {  OrbitControls, Text, Environment, Merged, MeshReflectorMaterial, useProgress  } from '@react-three/drei'
+import {  OrbitControls, Text, Environment, Merged, MeshReflectorMaterial, useProgress, Loader  } from '@react-three/drei'
 import {Setup} from './Setup'
 import { Suspense } from 'react';
 
@@ -15,7 +15,7 @@ function App() {
 
   const  Loader=()=> {
     const { active, progress, errors, item, loaded, total } = useProgress()
-    return <Text center>Loading 3D Model. Please wait {progress.toFixed(2)} % </Text>
+    return <Text center>Loading 3D Model. Please wait {progress.toFixed(2)} % {loaded}ms </Text>
   }
 
 
@@ -30,9 +30,9 @@ function App() {
   
     <Suspense fallback={<Loader />}>
        <Setup receiveShadow castShadow scale ={2.21} position={[-1.3,-1.3,39.1]}  rotation={[0,0,0]} />    
+          
       </Suspense>
-    
- 
+
      
       <ambientLight intensity={0.25} />
       <directionalLight castShadow intensity={2} position={[10, 6, 6]} shadow-mapSize={[1024, 1024]}>
