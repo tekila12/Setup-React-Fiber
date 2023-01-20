@@ -19,9 +19,11 @@ export function Setup(props) {
   const [focus, setFocus] = useState(true);
   const [textContent, setTextContent] = useState("Hello, Click on the Power ")
   const blackMaterial = new THREE.MeshStandardMaterial({ color: 0x000000 });
+
   const vec = new THREE.Vector3();
-  
  
+  materials['Material.074_36'].color.set(`white`)
+  materials['Material.074_36'].needsUpdate = true
 
   const zoomIn = ()=> {
     if (meshRef.current) {
@@ -32,6 +34,10 @@ export function Setup(props) {
 
   }
 
+  
+  
+  
+ 
 
 useFrame((state) => {
     if (meshRef.current && isZooming && focus) {
@@ -42,6 +48,8 @@ useFrame((state) => {
         state.camera.updateProjectionMatrix();
     }
 });
+
+
 
 
 
@@ -2213,7 +2221,7 @@ const handlekeyboard  = () => {
               </group>
               <group name="Text161_596" position={[158.2, 48.55, 268.32]} rotation={[-1.57, -0.04, 1.57]} scale={[5.12, 4.44, 2.47]}>
                 <group name="Object_988">
-                  <mesh name="Object_988_Material067_0" geometry={nodes.Object_988_Material067_0.geometry} material={materials['Material.074_36']} />
+                  <mesh name="Object_988_Material067_0"  geometry={nodes.Object_988_Material067_0.geometry} material={materials['Material.074_36']} />
                 </group>
               </group>
               <group name="Text162_597" position={[162.31, 48.55, 268.01]} rotation={[-1.57, -0.04, 1.57]} scale={[3.21, 4.44, 2.47]}>
@@ -2631,7 +2639,7 @@ const handlekeyboard  = () => {
         {textContent}
       </Text3D>
       </Center>
-        <mesh name="TwistedTorus" geometry={nodes.TwistedTorus.geometry} material={materials['Material.001']} position={[2.83, 7.31, 0.86]} rotation={[Math.PI / 2, 0, 0]} scale={0.06} />
+        <mesh name="TwistedTorus" geometry={nodes.TwistedTorus.geometry} material={materials['Material.001']} position={[2.83, 7.31, 0.836]} rotation={[Math.PI / 2, 0, 0]} scale={0.06} />
         <mesh name="Text001" geometry={nodes.Text001.geometry} material={materials['Material.009']} position={[2.71, 7.47, 0.88]} rotation={[Math.PI / 2, 0, 0]} scale={0.08} />
       </group>
     </group>
