@@ -37,7 +37,8 @@ function App() {
           <orthographicCamera attach="shadow-camera" left={-20} right={20} top={20} bottom={-20} />
         </directionalLight>
         <OrbitControls />
-        <Environment preset="night" />
+
+      
       </Canvas>
     </div>
   );
